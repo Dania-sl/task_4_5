@@ -9,13 +9,13 @@ namespace task_5
     {
         private static double[] ReadFile(string path)
         {
-            string[] text = File.ReadAllText(path).Split(" ");
-            double[] array = new double[text.Length];
-            for (int i = 0; i < text.Length; i++)
+            string[] file_path = File.ReadAllText(path).Split(" ");
+            double[] array = new double[file_path.Length];
+            for (int i = 0; i < file_path.Length; i++)
             {
                 try
                 {
-                    array[i] = Convert.ToDouble(text[i]);
+                    array[i] = Convert.ToDouble(file_path[i]);
                 }
                 catch (InvalidCastException e)
                 {
