@@ -3,20 +3,16 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Reflection.Metadata;
 
 namespace task_4
 {
     class Program
 
     {
-        private static double[] Array_of_grad(ref double[] all_grad, ref double[] second_all_grad, ref double user_number)
+        private static double[] Array_of_grad(ref double[] all_grad, ref double[] second_all_grad)
         {
-
-            Console.Write("Press k if you want use keyboard and f if you want use file ");
-            ConsoleKey key = Console.ReadKey().Key;
-            Console.WriteLine("");
-            if(key == ConsoleKey.K)
+            Console.WriteLine("Press k if you want use keyboard and f if you want use file");
+            if (Console.ReadKey().Key == ConsoleKey.K)
             {
                 Console.Write("Enter gradus: ");
                 var grad_1 = Console.ReadLine();
@@ -67,7 +63,7 @@ namespace task_4
                 Console.WriteLine($"{all_grad[0]}.{all_grad[1]}'{all_grad[2]}''");
                 Console.WriteLine($"{second_all_grad[0]}.{second_all_grad[1]}'{second_all_grad[2]}''");
             }
-            if (key == ConsoleKey.F )
+            else
             {
                 string path = "test.txt";
                 string[] all_grad_string = File.ReadLines(path).First().Split(" ");
@@ -78,20 +74,9 @@ namespace task_4
                 second_all_grad = ReadFile(second_all_grad_string);
                 all_grad = normal_appearance(all_grad);
                 second_all_grad = normal_appearance(second_all_grad);
-            }
-            else
-            {
-                Console.WriteLine("You enter wrong key");
-                Environment.Exit(0);
-            }
-            Console.Write("Enrer number for multiplex: ");
-            var user_number_1 = Console.ReadLine();
-            while (!double.TryParse(user_number_1, out user_number))
-            {
-                Console.WriteLine("Enter correct value, type double!");
-                user_number_1 = Console.ReadLine();
-            }
 
+
+            }
             return null;
         }
         private static double[] ReadFile(string[] file_path)
@@ -105,8 +90,15 @@ namespace task_4
                 }
                 catch (InvalidCastException e)
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e);
+                    Environment.Exit(0);
                 }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Environment.Exit(0);
+                }
+               
             }
             return array;
         }
@@ -187,9 +179,17 @@ namespace task_4
             return grad_dif;
 
         }
-        private static double[] Mult(double[] second_all_grad, double[] all_grad, double user_number)
+        private static double[] Mult(double[] second_all_grad, double[] all_grad)
         {
             double[] grad_mult = new double[3];
+            double user_number;
+            Console.Write("Enrer number for multiplex: ");
+            var user_number_1 = Console.ReadLine();
+            while (!double.TryParse(user_number_1, out user_number))
+            {
+                Console.WriteLine("Enter correct value, type double!");
+                user_number_1 = Console.ReadLine();
+            }
             grad_mult[0] = all_grad[0] * user_number;
             grad_mult[1] = all_grad[1] * user_number;
             grad_mult[2] = all_grad[2] * user_number;
@@ -208,18 +208,18 @@ namespace task_4
         static void Main(string[] args)
 
         {
-            double user_number = 0 ;
+
             double[] all_grad = new double[3];
             double[] second_all_grad = new double[3];
 
-            Array_of_grad(ref all_grad, ref second_all_grad,ref user_number);
+            Array_of_grad(ref all_grad, ref second_all_grad);
 
             Console.Write("Sum of angles = ");
             Console.WriteLine(string.Join(' ', Sum(second_all_grad, all_grad)));
             Console.Write("Difference of angles = ");
             Console.WriteLine(string.Join(' ', Dif(second_all_grad, all_grad)));
             Console.Write("Multiplication by a number = ");
-            Console.WriteLine(string.Join(' ', Mult(second_all_grad, all_grad, user_number)));
+            Console.WriteLine(string.Join(' ', Mult(second_all_grad, all_grad)));
             Console.Write("Rad of angles = ");
             Console.WriteLine(Rad(all_grad));
 

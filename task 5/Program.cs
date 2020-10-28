@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace task_5
 {
+    
     class Program
     {
         private static double[] ReadFile(string path)
@@ -20,7 +21,14 @@ namespace task_5
                 catch (InvalidCastException e)
                 {
                     Console.WriteLine(e.Message);
+                    Environment.Exit(0);
                 }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Environment.Exit(0);
+                }
+               
             }
             return array;
         }
@@ -60,8 +68,8 @@ namespace task_5
 
         static void Main(string[] args)
         {
-            string x_file = @"D:\PRoject\task_4_5\x.txt";
-            string y_file = @"D:\PRoject\task_4_5\y.txt";
+            string x_file = "x.txt";
+            string y_file = "y.txt";
 
             double[] x_ar = ReadFile(x_file);
             double[] y_ar = ReadFile(y_file);
