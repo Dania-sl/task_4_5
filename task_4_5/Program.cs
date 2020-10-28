@@ -106,6 +106,12 @@ namespace task_4
                 catch (InvalidCastException e)
                 {
                     Console.WriteLine(e.Message);
+                    Environment.Exit(0);
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Environment.Exit(0);
                 }
             }
             return array;
